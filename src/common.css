@@ -7,6 +7,9 @@
 .justify-between {
   justify-content: space-between;
 }
+.justify-center {
+  justify-content: center;
+}
 .item-center {
   align-items: center;
 }
@@ -15,4 +18,8 @@
 }
 .item-start {
   align-items: flex-start;
+}
+
+.margin-l-50 {
+  margin-left: 50px;
 }

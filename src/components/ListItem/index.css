@@ -1,0 +1,35 @@
+.all_list {
+  border-bottom: 2px solid black;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  /* border: 1px solid black; */
+}
+
+.list_item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.list_item .delBtn {
+  display: none;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.list_item:hover {
+  background-color: wheat;
+}
+
+.list_item:hover .delBtn {
+  display: block;
+  background-color: tomato;
+  color: white;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+}
