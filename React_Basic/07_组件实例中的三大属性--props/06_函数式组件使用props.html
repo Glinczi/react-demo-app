@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+  <!-- 引入PropsType对props进行限制 -->
+  <script src="../pubilc//prop-types.js"></script>
+
+  <script type="text/babel">
+    // 函数式组件可以通过函数的参数 实现读取props的操作
+    function Cat(props) {
+      const { name, age, sex } = props
+      return (
+        <ul>
+          <li>姓名:{name}</li>
+          <li>姓名:{age}</li>
+          <li>姓名:{sex}</li>
+        </ul>
+      )
+    }
+    // 函数式组件要想限制props,需要使用如下方法
+    Cat.propTypes = {
+      name: PropTypes.string.isRequired,
+      age: PropTypes.number,
+    }
+    Cat.defaultProps = {
+      age: 18,
+      sex: '男'
+    }
+    // 假设后端返回的数据是这样的
+    const obj = {
+      name: '小志',
+      age: 18,
+      sex: '男'
+      // ...
+    }
+
+    ReactDOM.render(<Cat {...obj} />, document.querySelector('#box1'))
+
+  </script>
+</body>
+
+</html>

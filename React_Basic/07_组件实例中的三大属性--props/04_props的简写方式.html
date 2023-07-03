@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+  <div id="box2"></div>
+  <div id="box3"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+  <!-- 引入PropsType对props进行限制 -->
+  <script src="../pubilc//prop-types.js"></script>
+
+  <script type="text/babel">
+    class Person extends React.Component {
+      static propTypes = {
+        name: PropTypes.string.isRequired,
+        age: PropTypes.number,
+      }
+      static defaultProps = {
+        age: 18,
+        sex: '男'
+      }
+      render() {
+        const { name, age, sex } = this.props
+        return (
+          <ul>
+            <li>姓名:{name}</li>
+            <li>姓名:{age}</li>
+            <li>姓名:{sex}</li>
+          </ul>
+        )
+      }
+    }
+
+    // 假设后端返回的数据是这样的
+    const obj = {
+      name: '小志',
+      age: 18,
+      sex: '男'
+      // ...
+    }
+
+    ReactDOM.render(<Person {...obj} />, document.querySelector('#box1'))
+    ReactDOM.render(<Person name="小小志" age={20} sex="男" />, document.querySelector('#box2'))
+    ReactDOM.render(<Person name="烧饼" age={2} />, document.querySelector('#box3'))
+
+  </script>
+</body>
+
+</html>

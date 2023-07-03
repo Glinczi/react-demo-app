@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #inside-box {
+      background-color: yellowgreen;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 1 先准备一个存放的容器 -->
+  <div id="test"></div>
+
+  <!-- 2 引入需要的React js文件 -->
+  <!-- 2.1 React核心库 -->
+  <script src="../pubilc/react.development.js"></script>
+  <!-- 2.2 React操作DOM的库 -->
+  <script src="../pubilc/react-dom.development.js"></script>
+  <!-- 2.3 jsx转js -->
+  <script src="../pubilc/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    // 
+    const idName = "inside-box"
+    const className = 'inside'
+
+    const data = ['Vue', 'React', 'Anguler']
+
+    const VDOM = (
+      <div id={idName}>
+        <h1>前端框架</h1>
+        <ul>
+          {
+            // 这里面只能写JS表达式
+            data.map((item, index) => {
+              // 因为Diff算法的原因,每个标签都需要一个key值
+              return <li key={index}>{item}</li>
+            })
+          }
+        </ul>
+      </div>
+    )
+
+    // ReactDOM.render(虚拟dom,存放的容器)
+    ReactDOM.render(VDOM, document.querySelector('#test'))
+
+  </script>
+
+</body>
+
+</html>

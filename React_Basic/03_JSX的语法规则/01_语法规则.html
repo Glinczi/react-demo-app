@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .inside-box {
+      background-color: yellowgreen;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 1 先准备一个存放的容器 -->
+  <div id="test"></div>
+
+  <!-- 2 引入需要的React js文件 -->
+  <!-- 2.1 React核心库 -->
+  <script src="../pubilc/react.development.js"></script>
+  <!-- 2.2 React操作DOM的库 -->
+  <script src="../pubilc/react-dom.development.js"></script>
+  <!-- 2.3 jsx转js -->
+  <script src="../pubilc/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    // 
+    const idName = "inside-box"
+    const className = 'inside'
+
+    const VDOM = (
+      <div id={idName}>
+        <h1 className={className}>
+          <span style={{ color: 'red' }}>Hello,React</span>
+        </h1>
+        <input type="text" />
+        <img src="../pubilc/search-baci.jpeg" alt="" />
+      </div>
+    )
+
+    // ReactDOM.render(虚拟dom,存放的容器)
+    ReactDOM.render(VDOM, document.querySelector('#test'))
+
+    /*
+      1.定义虚拟DOM的时候,不要写引号
+      2.标签中混入JS表达式时要用{}
+      3.样式的类名指定不要使用class,要用className
+      4.内联样式 要使用style={{key:value}}的形式去写 最外面一个{}代表这个是js 里面的{}表示这是一个对象
+      5.只有一个根标签
+      6.对于单标签必须要闭合
+      7.标签首字母
+        - 首字母是小写字母开头,则将标签转换成html中对应的标签名 如果不存在对应的标签名,则报错
+        - 首字母是大写字母开头,react就去渲染对应的组件,组件未定义则报错
+    */
+
+  </script>
+
+</body>
+
+</html>

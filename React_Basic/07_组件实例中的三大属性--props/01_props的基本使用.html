@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+
+  <script type="text/babel">
+    class Person extends React.Component {
+      render() {
+        // props运行从组件外部传递值到组件内部 和Vue的props类似
+        const { name, age, sex } = this.props
+        return (
+          <ul>
+            <li>姓名:{name}</li>
+            <li>姓名:{age}</li>
+            <li>姓名:{sex}</li>
+          </ul>
+        )
+      }
+    }
+    // 通过标签属性将值传递到Person内部
+    ReactDOM.render(<Person name='小志' age='18' sex='男' />, document.querySelector('#box1'))
+
+  </script>
+</body>
+
+</html>

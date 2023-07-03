@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #inside-box {
+      background-color: yellowgreen;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 1 先准备一个存放的容器 -->
+  <div id="test"></div>
+
+  <!-- 2 引入需要的React js文件 -->
+  <!-- 2.1 React核心库 -->
+  <script src="../pubilc/react.development.js"></script>
+  <!-- 2.2 React操作DOM的库 -->
+  <script src="../pubilc/react-dom.development.js"></script>
+  <!-- 2.3 jsx转js -->
+  <script src="../pubilc/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    // 采用类式创建组件
+    // 注意:组件名必须大写,组件函数在使用的时候要写成标签的形式
+    class MyComponent extends React.Component {
+      // 必须要继承React内置的组件类React.Component
+
+      // 并且必须有render函数
+      render() {
+        console.log(this)
+        /*
+        MyComponent 组件实例对象
+        context: {}
+        props: {}
+        refs: {}
+        state: null
+        */
+        return <h1>这是通过类常见的组件,适用于复杂组件的创建</h1>
+      }
+    }
+
+
+
+    // ReactDOM.render(虚拟dom,存放的容器)
+    ReactDOM.render(<MyComponent />, document.querySelector('#test'))
+
+  </script>
+
+</body>
+
+</html>

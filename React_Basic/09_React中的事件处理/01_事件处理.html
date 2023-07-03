@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+  <!-- 引入PropsType对props进行限制 -->
+  <script src="../pubilc//prop-types.js"></script>
+
+  <script type="text/babel">
+
+    // React 中的事件处理函数
+    /* 
+    1.形式类似onXxxx（区别大小写）
+      a. react自己封装的事件 -- 为了更好的兼容性
+      b. 事件一般都是依靠事件委托，绑定在最外层的元素身上 -- 为了高效
+    2.可以通过event.target拿到绑定事件元素的相关DOM属性 -- 这样是为了减少ref的使用
+      ！具体通过event.target如何实现和ref相同效果的例子如下
+    */
+
+
+    class Demo extends React.Component {
+      showData1 = () => {
+        let element = this.setInput.current
+        alert(element.value)
+      }
+      showData2 = (event) => {
+        // 事件回调函数自带的event参数
+        alert(event.target.value) // NEW 这样就完全避免了使用ref，这种方式主要还是适用于事件回调函数和你想触发的元素绑定在一起的
+      }
+      setInput = React.createRef()
+      render() {
+        return (
+          <div>
+            <input ref={this.setInput} type="text" placeholder='请输入内容' />
+            <button onClick={this.showData1}>点击我出提示</button>
+            <input onBlur={this.showData2} type="text" placeholder="请输入需要提示的内容" />
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Demo />, document.querySelector('#box1'))
+
+  </script>
+</body>
+
+</html>

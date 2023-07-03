@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+  <!-- 引入PropsType对props进行限制 -->
+  <script src="../pubilc//prop-types.js"></script>
+
+  <script type="text/babel">
+    /*
+      高阶函数：一个函数出现一下两种情况的一种，就算是高阶函数
+        1. 若函数A，接收的参数还是一个函数，就称之为高阶函数
+        2. 若函数A的返回值依然是一个函数，也可以称之为高阶函数
+
+      函数的柯里化：通过函数继续返回函数的方式，实现多次接收参数最后统一处理的函数编码形式
+
+      这里处理表单数据需要用到函数柯里化，为的是在处理多个表单元素的时候可以公用一个函数
+
+    */
+
+    class Demo extends React.Component {
+      state = {
+        userName: '',
+        userPassword: ''
+      }
+      handlerSubmit = (event) => {
+        event.preventDefault() // 阻止默认事件
+        const { userName, userPassword } = this.state
+        // 注意 受控组件就不是通过ref来获取节点数据了，而是通过state来
+        alert(`用户名：${userName} 密码：${userPassword}`)
+      }
+      // 通过接收不同的type值  处理不同表单元素传递过来的值
+      setData = (type) => {
+        // 这里需要注意event不能写在上面,因为上面的函数是我自己调用的,不是React调用的 所以没有event
+        return (event) => {
+          this.setState({
+            [type]: event.target.value
+          })
+        }
+      }
+      render() {
+        return (
+          <form onSubmit={this.handlerSubmit}>
+            {
+              // 事件绑定的必须是一个函数,如果这里加小括号就不是函数了,而是这个函数的返回值作为事件绑定的参数,
+              // 为了解决这个问题,就需要通过函数返回函数的形式
+            }
+            用户名：<input onChange={this.setData('userName')} type="text" placeholder='请输入用户名' name='userName' />
+            密码：<input onChange={this.setData('userPassword')} type="password" name="userPassword" placeholder='请输入密码' />
+            <button>登录</button>
+          </form>
+        )
+      }
+    }
+    ReactDOM.render(<Demo />, document.querySelector('#box1'))
+
+  </script>
+</body>
+
+</html>

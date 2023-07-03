@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+  <!-- 引入PropsType对props进行限制 -->
+  <script src="../pubilc//prop-types.js"></script>
+
+  <script type="text/babel">
+
+    class Demo extends React.Component {
+      showData1 = () => {
+        // 通过回调函数的形式将对应的节点挂载到组件实例身上
+        const { input1 } = this
+        alert(input1.value)
+      }
+      showData2 = () => {
+        const { input2 } = this
+        alert(input2.value)
+      }
+      setInput = (elementNode) => { this.input1 = elementNode } // 将 ref 的回调函数定义成 class 的绑定函数的方式
+      render() {
+        return (
+          <div>
+            <input ref={this.setInput} type="text" placeholder='请输入内容' />
+            <button onClick={this.showData1}>点击我出提示</button>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Demo />, document.querySelector('#box1'))
+
+  </script>
+</body>
+
+</html>

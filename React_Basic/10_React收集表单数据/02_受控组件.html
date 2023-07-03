@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+  <!-- 引入PropsType对props进行限制 -->
+  <script src="../pubilc//prop-types.js"></script>
+
+  <script type="text/babel">
+    class Demo extends React.Component {
+      // TIPS 记住要初始化state的值
+      state = {
+        userName: '',
+        userPassword: ''
+      }
+      handlerSubmit = (event) => {
+        event.preventDefault() // 阻止默认事件
+        const { userName, userPassword } = this.state
+        // 注意 受控组件就不是通过ref来获取节点数据了，而是通过state来
+        alert(`用户名：${userName} 密码：${userPassword}`)
+      }
+
+      setUserName = (event) => {
+        // 由state来保存表单数据  通过setState来修改数据
+        this.setState({
+          userName: event.target.value
+        })
+      }
+      setUserPwd = (event) => {
+        // 由state来保存表单数据  通过setState来修改数据
+        this.setState({
+          userPassword: event.target.value
+        })
+      }
+      render() {
+        return (
+          <form onSubmit={this.handlerSubmit}>
+            用户名：<input onChange={this.setUserName} type="text" placeholder='请输入用户名' name='userName' />
+            密码：<input onChange={this.setUserPwd} type="password" name="userPassword" placeholder='请输入密码' />
+            <button>登录</button>
+          </form>
+        )
+      }
+    }
+    ReactDOM.render(<Demo />, document.querySelector('#box1'))
+
+  </script>
+</body>
+
+</html>

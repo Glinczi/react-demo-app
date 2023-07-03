@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #inside-box {
+      background-color: yellowgreen;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 1 先准备一个存放的容器 -->
+  <div id="test"></div>
+
+  <!-- 2 引入需要的React js文件 -->
+  <!-- 2.1 React核心库 -->
+  <script src="../pubilc/react.development.js"></script>
+  <!-- 2.2 React操作DOM的库 -->
+  <script src="../pubilc/react-dom.development.js"></script>
+  <!-- 2.3 jsx转js -->
+  <script src="../pubilc/babel.min.js"></script>
+
+  <script type="text/babel">
+    // 需求  通过变量isHot控制显示文字的改变
+    class MyComponent extends React.Component {
+
+      // 对于构造函数内部追加的属性可以直接通过复制语句的方式放在类里面,不需要通过构造器函数
+      state = {
+        isHot: false,
+        temp: 3
+      }
+      render() {
+        console.log('this', this)
+        const { isHot, temp } = this.state
+        return <h1 onClick={this.changeWeather}>今天天气很{isHot ? "炎热" : "凉爽"},气温有{temp}°C</h1>
+      }
+
+      // 将定义的函数改造成箭头函数 箭头函数没有自己的this,如果内部存在this,则同自己的父级保持一致
+      changeWeather = () => {
+        const isHot = this.state.isHot
+        this.setState({
+          isHot: !isHot
+        })
+      }
+
+    }
+
+    // ReactDOM.render(虚拟dom,存放的容器)
+    ReactDOM.render(<MyComponent />, document.querySelector('#test'))
+
+  </script>
+
+</body>
+
+</html>

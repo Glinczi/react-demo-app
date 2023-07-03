@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="box1"></div>
+
+    <script src="../pubilc/react.development.js"></script>
+    <script src="../pubilc/react-dom.development.js"></script>
+    <script src="../pubilc/babel.min.js"></script>
+    <!-- 引入PropsType对props进行限制 -->
+    <script src="../pubilc//prop-types.js"></script>
+
+    <script type="text/babel">
+      /*
+      初始化阶段：由ReactDom.render()触发 -- 初次渲染
+        1. constructor()
+        2. componentWillMount()
+        3. render()
+        4. componentDidMount()
+      更新阶段：由组件内部this.setState()或使用强制更新 forceUpdata()
+        1. shouldComponentUpdate() -- forceUpdata()不经过这个周期钩子  这个周期钩子需要一个布尔类型的返回值，默认true
+        2. componentWillUpdate()
+        3. render()
+        4. componentDidUpdate()
+      卸载组件：由ReactDOM.unmountComponentAtNode()触发
+        1. componentWillUnmount()
+    */
+      class Outside extends React.Component {
+        constructor(props) {
+          super(props);
+          console.log("1最先执行的钩子 constructor");
+        }
+        state = {
+          weather: true,
+        };
+        changeWeather = () => {
+          this.setState({
+            weather: !this.state.weather,
+          });
+        };
+        destoryCom = () => {
+          ReactDOM.unmountComponentAtNode(document.querySelector("#box1"));
+        };
+
+        componentWillMount() {
+          console.log("2 componentWillMount");
+        }
+        shouldComponentUpdate() {
+          // 写的话必须返回一个布尔值 不写这个周期默认是true
+          console.log("4 shouldComponentUpdata");
+          return true;
+        }
+        componentWillUpdate() {
+          console.log("5 componentWillUpdate");
+        }
+        componentDidUpdate() {
+          console.log("6 componentDidUpdata");
+        }
+        componentWillUnmount() {
+          console.log("7 componentWillUnmount");
+        }
+        // 直接在根标签内部写另一个组件就可以实现父子组件关系
+        render() {
+          console.log("3 render");
+          return (
+            <div>
+              今天天气很
+              <Inside weather={this.state.weather} />
+              <button onClick={this.changeWeather}>点我切换温度</button>
+              <button onClick={this.destoryCom}>点我卸载组件</button>
+            </div>
+          );
+        }
+      }
+      class Inside extends React.Component {
+        render() {
+          let { weather } = this.props;
+          return <div>{weather ? "炎热" : "凉爽"}</div>;
+        }
+      }
+      ReactDOM.render(<Outside />, document.querySelector("#box1"));
+    </script>
+  </body>
+</html>

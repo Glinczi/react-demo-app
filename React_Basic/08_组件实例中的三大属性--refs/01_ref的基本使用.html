@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box1"></div>
+
+  <script src="../pubilc/react.development.js"></script>
+  <script src="../pubilc/react-dom.development.js"></script>
+  <script src="../pubilc/babel.min.js"></script>
+  <!-- 引入PropsType对props进行限制 -->
+  <script src="../pubilc//prop-types.js"></script>
+
+  <script type="text/babel">
+    class Demo extends React.Component {
+      showData1 = () => {
+        const { input1 } = this.refs // 通过组件实例身上的refs属性,拿到标签上的标记
+        alert(input1.value)
+      }
+      showData2 = () => {
+        const { input2 } = this.refs
+        alert(input2.value)
+      }
+      render() {
+        return (
+          <div>
+            <input ref="input1" type="text" placeholder='请输入内容' />
+            <button onClick={this.showData1}>点击我出提示</button>
+            <input onBlur={this.showData2} ref="input2" type="text" placeholder="失焦后提示输入内容" />
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Demo />, document.querySelector('#box1'))
+
+  </script>
+</body>
+
+</html>

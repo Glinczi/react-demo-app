@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #inside-box {
+      background-color: yellowgreen;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 1 先准备一个存放的容器 -->
+  <div id="test"></div>
+
+  <!-- 2 引入需要的React js文件 -->
+  <!-- 2.1 React核心库 -->
+  <script src="../pubilc/react.development.js"></script>
+  <!-- 2.2 React操作DOM的库 -->
+  <script src="../pubilc/react-dom.development.js"></script>
+  <!-- 2.3 jsx转js -->
+  <script src="../pubilc/babel.min.js"></script>
+
+  <script type="text/babel">
+    // 需求  通过变量isHot控制显示文字的改变
+    class MyComponent extends React.Component {
+      // state 类似 vue中的data 页面需要用到的参数,用于创建有状态的组件
+      constructor(props) {
+        // isHot是MyComponent独有的状态值 需要通过构造器函数创建
+        super(props)
+        // 这里是往state中存入值
+        this.state = {
+          isHot: false,
+          temp: 3
+        }
+        this.changeWeather = this.changeWeather.bind(this)
+      }
+
+      render() {
+        // NEW 这里的this,指向组件实例对象
+        console.log('this', this)
+        // 这里是从state中读取值
+        const { isHot, temp } = this.state
+        // 给标签绑定点击事件  推荐使用标签内部绑定 需要注意的是 React 重写了自己的绑定关键字 onclick ==> onClick
+        // NEW onClick中的changeWeather函数是作为回调函数执行的(直接调用),所以不是组件实例对象调用的该方法
+        // 此时的this不指向组件实例
+        // 回调函数中的this默认指向全局,但是使用class定义的函数默认开启了局部严格模式,所以this是undefined
+        // 所以需要解决的问题就是组件实例中
+        return <h1 onClick={this.changeWeather}>今天天气很{isHot ? "炎热" : "凉爽"},气温有{temp}°C</h1>
+      }
+
+      changeWeather() {
+        console.log(this.state.isHot)
+      }
+
+    }
+
+
+
+    // ReactDOM.render(虚拟dom,存放的容器)
+    ReactDOM.render(<MyComponent />, document.querySelector('#test'))
+
+  </script>
+
+</body>
+
+</html>
