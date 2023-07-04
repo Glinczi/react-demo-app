@@ -31,11 +31,12 @@ export default class ListItem extends Component {
           {this.props.list.map((item) => {
             return (
               <li key={item.id} className="list_item">
-                {/* defaultChecked 表示第一次是否勾选 后续可以修改 但是使用这个会有bug */}
+                {/* defaultChecked 表示第一次是否勾选 后续修改没有反应
+                需要使用checked（这个需要搭配onChange事件或者readonly）*/}
                 <div>
                   <input
                     type="checkbox"
-                    defaultChecked={item.isDone}
+                    checked={item.isDone}
                     onChange={() => {
                       this.handleChange(item.id);
                     }}

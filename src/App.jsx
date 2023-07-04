@@ -39,6 +39,7 @@ export default class App extends Component {
 
   /**
    * 将input输入的内容改变state
+   * @param {string} value 输入框输入的内容
    */
   addTodo = (value) => {
     let obj = {
@@ -53,7 +54,7 @@ export default class App extends Component {
     });
   };
   /**
-   * 已完成
+   * 改变当前待办状态
    */
   isDone = (id) => {
     let { list } = this.state;
@@ -70,7 +71,8 @@ export default class App extends Component {
     });
   };
   /**
-   * 删除操作
+   * 删除当前待办
+   * @param {*} id 删除待办的id
    */
   deleteTodo = (id) => {
     let { list } = this.state;
@@ -80,6 +82,25 @@ export default class App extends Component {
     list.splice(index, 1);
     this.setState({
       list,
+    });
+  };
+  updateAllListState = (state) => {
+    let { list } = this.state;
+    let newList = list.map((item) => {
+      return { ...item, isDone: state };
+    });
+    this.setState({
+      list: newList,
+    });
+  };
+  setAllIsDoneToFalse = () => {
+    let { list } = this.state;
+    let newlist = list.map((item) => {
+      return { ...item, isDone: false };
+    });
+    console.log(newlist);
+    this.setState({
+      list: newlist,
     });
   };
 
@@ -94,7 +115,11 @@ export default class App extends Component {
             list={this.state.list}
             deleteTodo={this.deleteTodo}
           ></ListItem>
-          <SumBottom></SumBottom>
+          <SumBottom
+            setAllIsDoneToFalse={this.setAllIsDoneToFalse}
+            list={this.state.list}
+            updateAllListState={this.updateAllListState}
+          ></SumBottom>
         </div>
       </div>
     );
