@@ -4,16 +4,14 @@ import "./index.css";
 
 export default class SumBottom extends Component {
   static propTypes = {
-    setAllIsDoneToFalse: PropTypes.func,
+    clearItemWithDone: PropTypes.func,
     list: PropTypes.array,
     updateAllListState: PropTypes.func,
   };
-  reset = () => {
-    this.props.setAllIsDoneToFalse();
-  };
-  update = (state) => {
-    this.props.updateAllListState(state);
-  };
+  /**
+   * 初始化已完成和总数
+   * @returns 已完成和总数
+   */
   setNum = () => {
     let isDone = 0;
     let { list } = this.props;
@@ -27,21 +25,27 @@ export default class SumBottom extends Component {
   };
 
   render() {
+    // render触发的条件
     const { allNum, isDone } = this.setNum();
     return (
       <div className="sum_bottom justify-between">
         <input
           type="checkbox"
           onChange={(event) => {
-            this.update(event.target.checked);
+            this.props.updateAllListState(event.target.checked);
           }}
-          checked={isDone == allNum ? true : false}
+          checked={isDone === allNum && allNum !== 0 ? true : false}
         />
         {/* 如何实现类似Vue的computed */}
         <div>
           已完成{isDone}/全部{allNum}
         </div>
-        <button className="clear_btn" onClick={this.reset}>
+        <button
+          className="clear_btn"
+          onClick={() => {
+            this.props.clearItemWithDone();
+          }}
+        >
           清除所有已完成的任务
         </button>
       </div>

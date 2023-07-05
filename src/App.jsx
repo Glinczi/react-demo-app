@@ -84,6 +84,10 @@ export default class App extends Component {
       list,
     });
   };
+  /**
+   * 全选状态改变
+   * @param {*} state input的状态值
+   */
   updateAllListState = (state) => {
     let { list } = this.state;
     let newList = list.map((item) => {
@@ -93,12 +97,14 @@ export default class App extends Component {
       list: newList,
     });
   };
-  setAllIsDoneToFalse = () => {
+  /**
+   * 删除已经完成的待办
+   */
+  clearItemWithDone = () => {
     let { list } = this.state;
-    let newlist = list.map((item) => {
-      return { ...item, isDone: false };
+    let newlist = list.filter((item) => {
+      return item.isDone == false;
     });
-    console.log(newlist);
     this.setState({
       list: newlist,
     });
@@ -116,7 +122,7 @@ export default class App extends Component {
             deleteTodo={this.deleteTodo}
           ></ListItem>
           <SumBottom
-            setAllIsDoneToFalse={this.setAllIsDoneToFalse}
+            clearItemWithDone={this.clearItemWithDone}
             list={this.state.list}
             updateAllListState={this.updateAllListState}
           ></SumBottom>
