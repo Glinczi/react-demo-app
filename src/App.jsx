@@ -1,133 +1,94 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { nanoid } from "nanoid"; // 类似uuid的 生成随机id
 import "./App.css";
-import InputArea from "./components/InputArea";
-import ListItem from "./components/ListItem";
-import SumBottom from "./components/SumBottom";
-
-/**
- * 几个小问题
- * 1. 如何通过点击点选框关联对应的数据？
- * 2. 如何和Vue一样实现双向绑定
- */
-
-/**
- * 将数据和处理数据的方法放在父组件里面  通过Props的方式传递给子组件 就可以避免兄弟组件之间的值传递问题
- */
 
 // 创建外壳组件
-export default class App extends Component {
-  state = {
-    list: [
-      {
-        id: 1,
-        text: "起床",
-        isDone: false,
-      },
-      {
-        id: 2,
-        text: "刷牙",
-        isDone: false,
-      },
-      {
-        id: 3,
-        text: "喝水",
-        isDone: true,
-      },
-    ],
-  };
+// export default class App extends Component {
+//   state = {
+//     line: [
+//       [0, 1, 2],
+//       [3, 4, 5],
+//       [6, 7, 8],
+//       [0, 3, 6],
+//       [1, 4, 7],
+//       [2, 5, 8],
+//       [0, 4, 8],
+//       [2, 4, 6],
+//     ],
+//   };
+//   render() {
+//     return (
+//       <div className="game_area">
+//         <div className="grid-top">X</div>
+//         <div className="grid-top"></div>
+//         <div className="grid-top">O</div>
+//         <div className="grid-middle"></div>
+//         <div className="grid-middle"></div>
+//         <div className="grid-middle"></div>
+//         <div className="grid-bottom"></div>
+//         <div className="grid-bottom"></div>
+//         <div className="grid-bottom"></div>
+//       </div>
+//     );
+//   }
+// }
+
+export default function App() {
+  const [symbol, setSymbol] = useState("X");
+  const [symbolList, setSymbolList] = useState(Array(9).fill(null));
 
   /**
-   * 将input输入的内容改变state
-   * @param {string} value 输入框输入的内容
+   * 设置symbol
    */
-  addTodo = (value) => {
-    let obj = {
-      id: nanoid(),
-      text: value,
-      isDone: false,
-    };
-    let { list } = this.state;
-    list.unshift(obj);
-    this.setState({
-      list,
-    });
+  const writeSymbol = (event) => {
+    console.dir(event);
+    let node = event.target;
+    let index = node.dataset.index;
+    node.innerText = symbol;
+    symbolList[index] = symbol;
+    if (whoIsWinner) {
+      alert(symbol + "is Winner");
+      return;
+    } else {
+      setSymbolList(symbolList);
+      if (symbol === "X") setSymbol("O");
+      if (symbol === "O") setSymbol("X");
+    }
   };
   /**
-   * 改变当前待办状态
+   * 判断输赢
    */
-  isDone = (id) => {
-    let { list } = this.state;
-    let newList = list.map((item) => {
-      if (item.id === id) {
-        return { ...item, isDone: !item.isDone };
-      } else {
-        return item;
-      }
+  const whoIsWinner = () => {
+    let line = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    let res = line.some((item) => {
+      return (
+        (symbolList[item[0]] && symbolList[item[0]]) === symbolList[item[1]] &&
+        (symbolList[item[0]] && symbolList[item[0]]) === symbolList[item[2]]
+      );
     });
-    console.log("newList", newList);
-    this.setState({
-      list: newList,
-    });
-  };
-  /**
-   * 删除当前待办
-   * @param {*} id 删除待办的id
-   */
-  deleteTodo = (id) => {
-    let { list } = this.state;
-    let index = list.findIndex((item) => {
-      return item.id === id;
-    });
-    list.splice(index, 1);
-    this.setState({
-      list,
-    });
-  };
-  /**
-   * 全选状态改变
-   * @param {*} state input的状态值
-   */
-  updateAllListState = (state) => {
-    let { list } = this.state;
-    let newList = list.map((item) => {
-      return { ...item, isDone: state };
-    });
-    this.setState({
-      list: newList,
-    });
-  };
-  /**
-   * 删除已经完成的待办
-   */
-  clearItemWithDone = () => {
-    let { list } = this.state;
-    let newlist = list.filter((item) => {
-      return item.isDone == false;
-    });
-    this.setState({
-      list: newlist,
-    });
+    return res;
   };
 
-  render() {
-    return (
-      <div>
-        <div className="todo_list">
-          {/* Props可以传递方法 */}
-          <InputArea addTodo={this.addTodo} />
-          <ListItem
-            isDone={this.isDone}
-            list={this.state.list}
-            deleteTodo={this.deleteTodo}
-          ></ListItem>
-          <SumBottom
-            clearItemWithDone={this.clearItemWithDone}
-            list={this.state.list}
-            updateAllListState={this.updateAllListState}
-          ></SumBottom>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div className="game_area">
+      <div onClick={writeSymbol} className="grid-top" data-index="0"></div>
+      <div onClick={writeSymbol} className="grid-top" data-index="1"></div>
+      <div onClick={writeSymbol} className="grid-top" data-index="2"></div>
+      <div onClick={writeSymbol} className="grid-middle" data-index="3"></div>
+      <div onClick={writeSymbol} className="grid-middle" data-index="4"></div>
+      <div onClick={writeSymbol} className="grid-middle" data-index="5"></div>
+      <div onClick={writeSymbol} className="grid-bottom" data-index="6"></div>
+      <div onClick={writeSymbol} className="grid-bottom" data-index="7"></div>
+      <div onClick={writeSymbol} className="grid-bottom" data-index="8"></div>
+    </div>
+  );
 }
