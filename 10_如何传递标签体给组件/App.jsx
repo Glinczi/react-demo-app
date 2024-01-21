@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import "./App.css";
@@ -12,15 +12,17 @@ export default class App extends Component {
         <div className="head-area">React Router Demo</div>
         <div className="body-area flex">
           <div className="left-nav flex flex-col" style={{ flex: 1 }}>
+            {/*
+             * 如何传递标签体给组件？
+             * 标签体其实也是一个特殊的props属性 -- children
+             */}
             <SelfNavLink to="/home" children="Home" />
             <SelfNavLink to="/about" children="About" />
           </div>
           <div className="right-content" style={{ flex: 2 }}>
-            <Switch>
-              <Route path="/home" component={Home} />
-              <Route path="/about" component={About} />
-              <Redirect to="/home" />
-            </Switch>
+            {/* 注册路由 */}
+            <Route path="/home" component={Home} />
+            <Route path="/about" component={About} />
           </div>
         </div>
       </div>

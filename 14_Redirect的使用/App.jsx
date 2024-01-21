@@ -19,6 +19,8 @@ export default class App extends Component {
             <Switch>
               <Route path="/home" component={Home} />
               <Route path="/about" component={About} />
+              {/* 重定向 （兜底） */}
+              {/* 放在路由注册的最下方 当所有的路由都无法匹配的时候 跳转到Redirect指定的路径 */}
               <Redirect to="/home" />
             </Switch>
           </div>
