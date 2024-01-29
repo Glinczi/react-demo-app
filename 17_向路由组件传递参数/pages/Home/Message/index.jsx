@@ -25,7 +25,7 @@ export default class Message extends Component {
           })}
         </div> */}
         {/* search参数 编写路由 */}
-        {/* <div>
+        <div>
           {messageList.map((item) => {
             return (
               <Link
@@ -36,33 +36,13 @@ export default class Message extends Component {
               </Link>
             );
           })}
-        </div> */}
-        {/* state参数编写路由 */}
-        <div>
-          {messageList.map((item) => {
-            return (
-              <Link
-                key={item.id}
-                to={{
-                  pathname: "/home/message/detail",
-                  state: {
-                    id: item.id,
-                    title: item.title,
-                  },
-                }}
-              >
-                {item.title}
-              </Link>
-            );
-          })}
         </div>
+        {/* search参数 编写路由 */}
         <div>
           {/* 传递params参数 : 路径上要提前定义好params的key */}
           {/* <Route path="/home/message/detail/:id/:title" component={Detail}></Route> */}
           {/* 传递search参数无需定义key */}
-          {/* <Route path="/home/message/detail" component={Detail}></Route> */}
-          {/* 传递state参数无需定义key */}
-          <Route replace path="/home/message/detail" component={Detail}></Route>
+          <Route path="/home/message/detail" component={Detail}></Route>
         </div>
       </div>
     );

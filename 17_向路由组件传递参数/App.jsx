@@ -19,6 +19,7 @@ export default class App extends Component {
             <Switch>
               <Route path="/home" component={Home} />
               <Route path="/about" component={About} />
+              <Redirect to="/home" />
             </Switch>
           </div>
         </div>

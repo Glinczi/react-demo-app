@@ -62,7 +62,7 @@ export default class Message extends Component {
           {/* 传递search参数无需定义key */}
           {/* <Route path="/home/message/detail" component={Detail}></Route> */}
           {/* 传递state参数无需定义key */}
-          <Route replace path="/home/message/detail" component={Detail}></Route>
+          <Route path="/home/message/detail" component={Detail}></Route>
         </div>
       </div>
     );
