@@ -10,6 +10,8 @@ export default class Detail extends Component {
     ],
   };
 
+  pageCount = React.createRef();
+
   render() {
     // 处理params参数
     // 路由信息存储在props的match属性里面
@@ -33,6 +35,33 @@ export default class Detail extends Component {
           <span>id:{id}</span>
           <span>title:{title}</span>
           <span>content:{content}</span>
+        </div>
+        <div>
+          <button
+            onClick={() => {
+              this.props.history.goBack();
+            }}
+          >
+            返回
+          </button>
+          <button
+            onClick={() => {
+              this.props.history.goForward();
+            }}
+          >
+            前进
+          </button>
+          <div className="inline">
+            <button
+              onClick={() => {
+                const element = this.pageCount.current;
+                this.props.history.go(element.value);
+              }}
+            >
+              跳转
+            </button>
+            <input ref={this.pageCount} type="number"></input>
+          </div>
         </div>
       </div>
     );
