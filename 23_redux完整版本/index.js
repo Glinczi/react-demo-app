@@ -15,9 +15,11 @@ root.render(
   </BrowserRouter>
 );
 
-// 监测store的改变，更新页面
+// 全部更新
+
 store.subscribe(() => {
   root.render(
+    // 需要放在最外层 整个App需要用一个路由器去管理
     <BrowserRouter>
       <App />
     </BrowserRouter>
